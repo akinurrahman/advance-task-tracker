@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { handleDeleteTask } from "../../redux/features/formDataSlice";
 
 const TaskCard = ({ title, tasks }) => {
+  const dispatch = useDispatch();
+  const [selectedTaskId, setSelectedTaskId] = useState(null);
+
+  // Function to toggle options visibility for a task
+  const toggleOptions = (taskId) => {
+    setSelectedTaskId((prevId) => (prevId === taskId ? null : taskId));
+  };
+
   return (
     <div className="task-card min-h-52 w-full rounded-md bg-white">
       {/* Card Title */}
@@ -22,6 +32,7 @@ const TaskCard = ({ title, tasks }) => {
       {/* Render tasks */}
       <div className="space-y-2 p-2">
         {tasks.map((task) => {
+          const isTaskSelected = task.id === selectedTaskId;
           return (
             <div
               key={task.id}
@@ -40,6 +51,7 @@ const TaskCard = ({ title, tasks }) => {
                 {/* Toggle options visibility */}
                 <p
                   className="cursor-pointer rounded-sm bg-blue-500 px-2 py-1 text-xs font-semibold text-white"
+                  onClick={() => toggleOptions(task.id)}
                 >
                   ⁝
                 </p>
@@ -48,6 +60,19 @@ const TaskCard = ({ title, tasks }) => {
               <button className="w-1/2 whitespace-nowrap rounded-md bg-blue-500 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-600">
                 {task.status === "Pending" ? "Assign" : task.status}
               </button>
+              {/* Render options */}
+              {isTaskSelected && (
+                <div className="absolute bottom-[-6px] right-0 z-50 flex flex-col rounded-md bg-[#CBD5E1] px-4 py-1 text-gray-700 sm:right-[-73px]">
+                  <button className="text-start hover:text-black">Edit</button>
+                  <button
+                    className={`text-start hover:text-black ${task.Status == "Completed" && "cursor-not-allowed"}`}
+                    onClick={() => dispatch(handleDeleteTask(task.id))}
+                    disabled={task.Status === "Completed"}
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
             </div>
           );
         })}

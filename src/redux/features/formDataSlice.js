@@ -9,8 +9,15 @@ export const formDataSlice = createSlice({
     setFormData: (state, action) => {
       state.formData.push(action.payload);
     },
+
+    handleDeleteTask: (state, action) => {
+      state.formData = state.formData.filter(
+        (task) => task.id !== action.payload,
+      );
+    },
   },
 });
 
 export default formDataSlice.reducer;
-export const { formData, setFormData } = formDataSlice.actions;
+export const { formData, setFormData, handleDeleteTask } =
+  formDataSlice.actions;
