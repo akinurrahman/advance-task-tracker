@@ -68,10 +68,15 @@ const TaskCard = ({ title, tasks }) => {
                   ⁝
                 </p>
               </div>
+
               {/* Render status change button */}
-              <button className="w-1/2 whitespace-nowrap rounded-md bg-blue-500 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-600">
-                {task.status === "Pending" ? "Assign" : task.status}
-              </button>
+
+              <div className="flex justify-between">
+                <button className="w-1/2 whitespace-nowrap rounded-md bg-blue-500 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-600">
+                  {task.status === "Pending" ? "Assign" : task.status}
+                </button>
+                <p className="text-gray-700">{task.startDate}</p>
+              </div>
               {/* Render options */}
               {isTaskSelected && (
                 <div className="absolute bottom-[-6px] right-0 z-50 flex flex-col rounded-md bg-[#CBD5E1] px-4 py-1 text-gray-700 sm:right-[-73px]">

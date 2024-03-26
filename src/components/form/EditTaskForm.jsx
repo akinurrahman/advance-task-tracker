@@ -30,6 +30,7 @@ const EditTaskForm = ({ formClose, task }) => {
       assignee: task.assignee,
       priority: task.priority,
       status: task.status,
+      startDate: task.startDate,
     });
   };
   // Function to handle form update
@@ -79,9 +80,16 @@ const EditTaskForm = ({ formClose, task }) => {
           value={formDataLocal.assignee}
           disabled
         />
+        <InputField
+          label="Start Date"
+          name="startDate"
+          type="date"
+          value={formDataLocal.startDate}
+          onChange={handleInputChange}
+        />
         {/* Priority and status fields */}
         <div className="flex items-center space-x-4 space-y-2">
-          <label>Priority:</label>
+          <label className="w-20">Priority:</label>
           <select
             name="priority"
             value={formDataLocal.priority}
