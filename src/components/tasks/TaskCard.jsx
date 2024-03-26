@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { handleDeleteTask } from "../../redux/features/formDataSlice";
+import EditTaskForm from "../form/EditTaskForm";
 
 const TaskCard = ({ title, tasks }) => {
   const dispatch = useDispatch();
@@ -9,6 +10,17 @@ const TaskCard = ({ title, tasks }) => {
   // Function to toggle options visibility for a task
   const toggleOptions = (taskId) => {
     setSelectedTaskId((prevId) => (prevId === taskId ? null : taskId));
+  };
+
+  // Function to handle opening edit form for a task
+  const [showEditTaskForm, setShowEditTaskForm] = useState(false);
+  const handleEditTask = (taskId) => {
+    setSelectedTaskId(taskId);
+    setShowEditTaskForm(true);
+  };
+  // Function to handle closing edit form
+  const handleFormClose = () => {
+    setShowEditTaskForm(false);
   };
 
   return (
@@ -63,7 +75,12 @@ const TaskCard = ({ title, tasks }) => {
               {/* Render options */}
               {isTaskSelected && (
                 <div className="absolute bottom-[-6px] right-0 z-50 flex flex-col rounded-md bg-[#CBD5E1] px-4 py-1 text-gray-700 sm:right-[-73px]">
-                  <button className="text-start hover:text-black">Edit</button>
+                  <button
+                    className="text-start hover:text-black"
+                    onClick={() => handleEditTask(task.id)}
+                  >
+                    Edit
+                  </button>
                   <button
                     className={`text-start hover:text-black ${task.Status == "Completed" && "cursor-not-allowed"}`}
                     onClick={() => dispatch(handleDeleteTask(task.id))}
@@ -71,6 +88,11 @@ const TaskCard = ({ title, tasks }) => {
                   >
                     Delete
                   </button>
+                </div>
+              )}
+              {showEditTaskForm && selectedTaskId === task.id && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-700 bg-opacity-50">
+                  <EditTaskForm formClose={handleFormClose} task={task} />
                 </div>
               )}
             </div>
