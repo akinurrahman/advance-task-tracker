@@ -31,7 +31,11 @@ const AddTaskForm = ({ formClose }) => {
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(setFormData(data));
+    const dataWithId = {
+      ...data,
+      id: Date.now(),
+    };
+    dispatch(setFormData(dataWithId));
 
     // Resetting form data
     setData({
@@ -72,13 +76,14 @@ const AddTaskForm = ({ formClose }) => {
           <label className="w-20">Priority:</label>
           <select
             name="priority"
+            required
             onChange={handleInputChange}
             className="w-full flex-1 border border-solid border-gray-400 p-2"
           >
             <option value="">Select Priority</option>
-            <option value="priorityLow">Low</option>
-            <option value="priorityMedium">Medium</option>
-            <option value="priorityHigh">High</option>
+            <option value="Priority Low">Priority Low</option>
+            <option value="Priority Medium">Priority Medium</option>
+            <option value="Priority High">Priority High</option>
           </select>
         </div>
         {/* Submit Button */}
