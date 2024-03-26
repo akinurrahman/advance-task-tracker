@@ -6,7 +6,7 @@ const InputField = ({ label, ...rest }) => {
       <label className="w-20">{label}</label>
       <input
         {...rest}
-        className="flex-1 border border-solid border-gray-500 bg-transparent px-1 py-1 outline-none"
+        className={`${rest.disabled && "cursor-not-allowed"} flex-1 border border-solid border-gray-500 bg-transparent px-1 py-1 outline-none`}
       />
     </div>
   );

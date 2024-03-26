@@ -82,9 +82,9 @@ const TaskCard = ({ title, tasks }) => {
                     Edit
                   </button>
                   <button
-                    className={`text-start hover:text-black ${task.Status == "Completed" && "cursor-not-allowed"}`}
+                    className={`text-start hover:text-black ${task.status == "Completed" && "cursor-not-allowed"}`}
                     onClick={() => dispatch(handleDeleteTask(task.id))}
-                    disabled={task.Status === "Completed"}
+                    disabled={task.status === "Completed"}
                   >
                     Delete
                   </button>

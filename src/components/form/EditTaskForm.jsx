@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
 import InputField from "./InputField";
+import { useDispatch } from "react-redux";
+import { updateFormData } from "../../redux/features/formDataSlice";
 
 const EditTaskForm = ({ formClose, task }) => {
+  const dispatch = useDispatch();
   const [formDataLocal, setFormDataLocal] = useState({
     title: task.title,
     description: task.description,
@@ -28,6 +31,16 @@ const EditTaskForm = ({ formClose, task }) => {
       priority: task.priority,
       status: task.status,
     });
+  };
+  // Function to handle form update
+  const handleFormUpdate = () => {
+    dispatch(
+      updateFormData({
+        id: task.id,
+        updatedData: formDataLocal,
+      }),
+    );
+    formClose();
   };
   return (
     <form>
@@ -98,7 +111,7 @@ const EditTaskForm = ({ formClose, task }) => {
         <div className="flex gap-2">
           <button
             className="mt-3 w-full bg-blue-400 py-2 text-white hover:bg-blue-500"
-            // onClick={handleFormUpdate}
+            onClick={handleFormUpdate}
           >
             UPDATE
           </button>

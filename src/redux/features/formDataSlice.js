@@ -15,9 +15,16 @@ export const formDataSlice = createSlice({
         (task) => task.id !== action.payload,
       );
     },
+    updateFormData: (state, action) => {
+      const { id, updatedData } = action.payload;
+      const index = state.formData.findIndex((task) => task.id === id);
+      if (index !== -1) {
+        state.formData[index] = { ...state.formData[index], ...updatedData };
+      }
+    },
   },
 });
 
 export default formDataSlice.reducer;
-export const { formData, setFormData, handleDeleteTask } =
+export const { formData, setFormData, handleDeleteTask, updateFormData } =
   formDataSlice.actions;
