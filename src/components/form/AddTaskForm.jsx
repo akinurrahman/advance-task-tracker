@@ -1,11 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
 import InputField from "./InputField";
 import { inputFields } from "./inputFields";
+import { useDispatch } from "react-redux";
+import { setFormData } from "../../redux/features/formDataSlice";
 
 const AddTaskForm = ({ formClose }) => {
-  const handleInputChange = () => {};
-  const handleSubmit = () => {};
+  const dispatch = useDispatch();
+
+  // State to manage form data
+  const [data, setData] = useState({
+    title: "",
+    description: "",
+    team: "",
+    assignee: "",
+    priority: "",
+    status: "Pending",
+    startDate: new Date().toISOString().slice(0, 10), // Set to today's date in YYYY-MM-DD format
+  });
+
+  // Function to handle input change
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // Function to handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(setFormData(data));
+
+    // Resetting form data
+    setData({
+      title: "",
+      description: "",
+      team: "",
+      assignee: "",
+      priority: "",
+      status: "Pending",
+      startDate: new Date().toISOString().slice(0, 10),
+    });
+  };
+
   return (
     <form onSubmit={handleSubmit} className="z-50">
       {/* Form Header */}
@@ -21,7 +60,12 @@ const AddTaskForm = ({ formClose }) => {
       <div className="bg-[#eedbf9] p-4">
         {/* Render Input Fields */}
         {inputFields.map((input) => (
-          <InputField key={input.id} {...input} onChange={handleInputChange} />
+          <InputField
+            key={input.id}
+            {...input}
+            value={data[input.name]}
+            onChange={handleInputChange}
+          />
         ))}
         {/* Priority Select */}
         <div className="flex items-center space-x-4 space-y-2">
