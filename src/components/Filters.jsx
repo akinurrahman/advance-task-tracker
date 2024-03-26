@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import AddTaskForm from "./form/AddTaskForm";
 
 const Filters = () => {
+  const [showAddTaskForm, setShowAddTaskForm] = useState(false);
+  const handleAddTaskClick = () => {
+    setShowAddTaskForm(true);
+  };
+  const handleFormClose = () => {
+    setShowAddTaskForm(false);
+  };
   return (
     <div className={`flex flex-col md:flex-row md:justify-between `}>
       {/* Filter Section */}
@@ -67,10 +75,19 @@ const Filters = () => {
       </section>
       {/* Add New Task Section */}
       <section>
-        <button className="my-2 w-full rounded-md bg-blue-500 px-10 py-2 font-semibold text-white shadow-md hover:bg-blue-600 focus:outline-none">
+        <button
+          className="my-2 w-full rounded-md bg-blue-500 px-10 py-2 font-semibold text-white shadow-md hover:bg-blue-600 focus:outline-none"
+          onClick={handleAddTaskClick}
+        >
           Add New Task
         </button>
       </section>
+      {/* Render AddTaskForm if showAddTaskForm is true */}
+      {showAddTaskForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-700 bg-opacity-50">
+          <AddTaskForm formClose={handleFormClose} />
+        </div>
+      )}
     </div>
   );
 };
