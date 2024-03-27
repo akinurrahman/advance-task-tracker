@@ -24,7 +24,7 @@ This is a Task Tracker web application built with ReactJS for managing tasks.
 
 ### Installation
 
-1. **Clone the repository:**
+## Clone the repository:
 
    git clone https://github.com/akinurrahman/advanced-task-tracker.git
 
