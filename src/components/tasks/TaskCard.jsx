@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { handleDeleteTask } from "../../redux/features/formDataSlice";
 import EditTaskForm from "../form/EditTaskForm";
 
 const TaskCard = ({ title, tasks }) => {
   const dispatch = useDispatch();
+  const { sortOrder } = useSelector((s) => s.formData);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
 
   // Function to toggle options visibility for a task
@@ -22,6 +23,21 @@ const TaskCard = ({ title, tasks }) => {
   const handleFormClose = () => {
     setShowEditTaskForm(false);
   };
+
+  // Define custom order
+  const order = { "Priority Low": 0, "Priority Medium": 1, "Priority High": 2 };
+  const sortedTasks = tasks.sort((a, b) => {
+    if (sortOrder === "priorityLowToHigh") {
+      return order[a.priority] - order[b.priority];
+    } else if (sortOrder === "priorityHighToLow") {
+      return order[b.priority] - order[a.priority];
+    } else if (sortOrder === "latestToOlder") {
+      return new Date(b.startDate) - new Date(a.startDate);
+    } else if (sortOrder === "olderToLatest") {
+      return new Date(a.startDate) - new Date(b.startDate);
+    }
+    return 0;
+  });
 
   return (
     <div className="task-card min-h-52 w-full rounded-md bg-white">
@@ -43,7 +59,7 @@ const TaskCard = ({ title, tasks }) => {
       </h2>
       {/* Render tasks */}
       <div className="space-y-2 p-2">
-        {tasks.map((task) => {
+        {sortedTasks.map((task) => {
           const isTaskSelected = task.id === selectedTaskId;
           return (
             <div

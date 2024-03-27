@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import AddTaskForm from "./form/AddTaskForm";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilteredData } from "../redux/features/formDataSlice";
+import {
+  setFilteredData,
+  setSortingOrder,
+} from "../redux/features/formDataSlice";
 
 const Filters = () => {
   const dispatch = useDispatch();
 
-  const { formData } = useSelector((state) => state.formData);
+  const { formData, sortOrder } = useSelector((state) => state.formData);
   const [showAddTaskForm, setShowAddTaskForm] = useState(false);
   const handleAddTaskClick = () => {
     setShowAddTaskForm(true);
@@ -25,6 +28,10 @@ const Filters = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFilterVal((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSortChange = (e) => {
+    dispatch(setSortingOrder(e.target.value));
   };
 
   const applyFilter = () => {
@@ -59,7 +66,6 @@ const Filters = () => {
   useEffect(() => {
     // Calculate filtered data
     const filteredData = applyFilter();
-    console.log(filteredData);
     // Dispatch action to set filtered data in Redux store
     dispatch(setFilteredData(filteredData));
   }, [filterVal, dispatch, formData]);
@@ -120,11 +126,14 @@ const Filters = () => {
           <select
             name="sortCriteria"
             className="flex-1 px-3 py-3 text-gray-600"
+            value={sortOrder}
+            onChange={handleSortChange}
           >
-            <option value="priorityHighToLow">Priority: High to Low</option>
+            <option value="">Select sort option</option>
             <option value="priorityLowToHigh">Priority: Low to High</option>
-            <option value="olderToLatest">Older to Latest</option>
+            <option value="priorityHighToLow">Priority: High to Low</option>
             <option value="latestToOlder">Latest to Older</option>
+            <option value="olderToLatest">Older to Latest</option>
           </select>
         </div>
       </section>

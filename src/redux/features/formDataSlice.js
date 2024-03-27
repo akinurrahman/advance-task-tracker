@@ -6,7 +6,8 @@ export const formDataSlice = createSlice({
   name: "formdatamanagement",
   initialState: {
     formData: [],
-    filteredData: [], 
+    filteredData: [],
+    sortOrder: "",
   },
   reducers: {
     setFormData: (state, action) => {
@@ -14,7 +15,7 @@ export const formDataSlice = createSlice({
     },
     handleDeleteTask: (state, action) => {
       state.formData = state.formData.filter(
-        (task) => task.id !== action.payload
+        (task) => task.id !== action.payload,
       );
     },
     updateFormData: (state, action) => {
@@ -26,7 +27,10 @@ export const formDataSlice = createSlice({
     },
     setFilteredData: (state, action) => {
       state.filteredData = action.payload;
-    }, 
+    },
+    setSortingOrder: (state, action) => {
+      state.sortOrder = action.payload;
+    },
   },
 });
 
@@ -36,5 +40,7 @@ export const {
   setFormData,
   handleDeleteTask,
   updateFormData,
-  setFilteredData, 
+  setFilteredData,
+  sortOrder,
+  setSortingOrder,
 } = formDataSlice.actions;

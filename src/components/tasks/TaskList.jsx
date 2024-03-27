@@ -4,7 +4,6 @@ import TaskCard from "./TaskCard";
 
 const TaskList = () => {
   const { filteredData } = useSelector((state) => state.formData);
-  console.log(filteredData);
 
   // Filter tasks for each status
   const pendingTasks = filteredData.filter((task) => task.status === "Pending");
