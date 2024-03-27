@@ -40,7 +40,4 @@ This is a Task Tracker web application built with ReactJS for managing tasks.
 
     npm run dev
 
-## Assumptions
-    • Tasks are managed within a single.
-    • Start date is automatically set to the task's created date.
-    • User can also edit the start date
+
